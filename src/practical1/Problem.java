@@ -31,6 +31,15 @@ public class Problem {
         this.graph.addEdge(node1, node2);
     }
 
+    public void printSolution(List<Integer> nodes)
+    {
+        String answer = "answer";
+        for(int node : nodes)
+            answer += ' ' + node;
+
+        System.out.println(answer);
+    }
+
     public List<Integer> solve(Scanner scanner)
     {
         List<Integer> answer = new ArrayList<>();
@@ -47,7 +56,7 @@ public class Problem {
         return answer;
     }
 
-    private void testWithinClique(List<Integer> integers, Scanner scanner, List<Integer> answer)
+    private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
 
     }
