@@ -1,3 +1,8 @@
+/*
+    @author Roberta Buzatu - s1020137
+    @author Bart van der Heijden - s1017343
+ */
+
 package practical1;
 
 import java.util.ArrayList;
@@ -35,7 +40,10 @@ public class Problem {
     {
         String answer = "answer";
         for(int node : nodes)
-            answer += ' ' + node;
+        {
+            answer += ' ';
+            answer += (char) (node + 48);
+        }
 
         System.out.println(answer);
     }
@@ -56,20 +64,21 @@ public class Problem {
         return answer;
     }
 
-    private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer) {
-        if (clique.size() > 10 && p <= 0.3) {
-            //split into groups
+    private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
+    {
+        if (clique.size() > 10 && this.infectionChance <= 0.3)
+        {
             testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
             testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
-        } else {
-            // test all cases individually
-            List<Integer> person = new ArrayList<>();
-            for(int i = 0; i < clique.size(); i++) {
-                person.add(clique.get(i));
-                boolean result = testClique(person, scanner);
-                if (result)
-                    answer.add(clique.get(i));
-                person.remove(i);
+        }
+        else
+            {
+                List<Integer> person = new ArrayList<>();
+                for(int node : clique) {
+                    person.add(node);
+                    if (testClique(person, scanner))
+                        answer.add(node);
+                    person.remove(0);
             }
         }
     }
@@ -79,17 +88,14 @@ public class Problem {
     {
         String test = "test";
         for (int node : clique)
-            test += ' ' + node;
+        {
+            test += ' ';
+            test += (char) (node + 48);
+        }
 
         System.out.println(test);
 
-        return scanner.nextLine().equals("true");
+        return scanner.next().equals("true");
     }
 
-    public String showContents() {
-        return "nodes: " + String.valueOf(nodes) + '\n' + "edges: " + String.valueOf(edges) + '\n' + "initInfected: " +
-                String.valueOf(initInfected) + '\n' + "infectionChance: " + String.valueOf(infectionChance) + '\n' +
-                "lowerBound: " + String.valueOf(lowerBound) + '\n' + "upperBound: " + String.valueOf(upperBound) + '\n'
-                + "adjacencyMatrix: " + '\n' + graph.showContents() + '\n';
-    }
 }

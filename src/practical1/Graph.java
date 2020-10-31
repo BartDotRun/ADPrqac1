@@ -1,3 +1,8 @@
+/*
+    @author Roberta Buzatu - s1020137
+    @author Bart van der Heijden - s1017343
+ */
+
 package practical1;
 
 import java.util.ArrayList;
@@ -7,7 +12,7 @@ import java.util.List;
 public class Graph {
     public int nodes; //# nodes the graph has.
     private int edges; //# edges the graph should have.
-    public int [][] adjacency;
+    public int[][] adjacency;
     private List<List<Integer>> cliques = new ArrayList<>();
 
     public Graph(int nodes, int edges) {
@@ -25,19 +30,16 @@ public class Graph {
 
     }
 
-    public List<List<Integer>> getCliques()
-    {
+    public List<List<Integer>> getCliques() {
         return this.cliques;
     }
 
-    public void findCliques()
-    {
+    public void findCliques() {
         List<Integer> degrees = this.computeDegreeOfNodes();
         List<Integer> grouped = new ArrayList<>();
         List<Integer> checked = new ArrayList<>();
 
-        while(grouped.size() < this.nodes)
-        {
+        while (grouped.size() < this.nodes) {
             int currentNode = findMin(degrees, checked);
             List<Integer> currentGroup = new ArrayList<>();
             currentGroup.add(currentNode);
@@ -45,8 +47,7 @@ public class Graph {
             checked.add(currentNode);
 
             for (int i = 0; i < this.nodes; i++)
-                if (this.adjacency[currentNode][i] == 1 && !grouped.contains(i))
-                {
+                if (this.adjacency[currentNode][i] == 1 && !grouped.contains(i)) {
                     currentGroup.add(i);
                     grouped.add(i);
                 }
@@ -58,15 +59,12 @@ public class Graph {
 
     }
 
-    private int findMin(List<Integer> degrees, List<Integer> grouped)
-    {
+    private int findMin(List<Integer> degrees, List<Integer> grouped) {
         int index = -1;
         int minimum = Integer.MAX_VALUE;
         int i = 0;
-        while(i < this.nodes)
-        {
-            if(!grouped.contains(i) && degrees.get(i) < minimum)
-            {
+        while (i < this.nodes) {
+            if (!grouped.contains(i) && degrees.get(i) < minimum) {
                 index = i;
                 minimum = degrees.get(i);
             }
@@ -75,34 +73,29 @@ public class Graph {
         return index;
     }
 
-    private void eliminateSingleCliques(List<List<Integer>> cliques)
-    {
+    private void eliminateSingleCliques(List<List<Integer>> cliques) {
         int i = 0;
-        while(i<cliques.size())
-        {
+        while (i < cliques.size()) {
 
             if (cliques.get(i).size() == 1) {
                 int index = findSmallestClique(cliques, cliques.get(i).get(0));
                 cliques.get(index).add(cliques.get(i).get(0));
                 cliques.remove(cliques.get(i));
-            }
-            else
+            } else
                 i++;
         }
     }
 
-    private int findSmallestClique(List<List<Integer>> cliques, int node)
-    {
+    private int findSmallestClique(List<List<Integer>> cliques, int node) {
         List<Integer> adjacentNodes = new ArrayList<>();
         for (int i = 0; i < this.nodes; i++)
             if (this.adjacency[node][i] == 1)
                 adjacentNodes.add(i);
         ArrayList copy = new ArrayList(cliques);
-        for (List<Integer> clique : cliques)
-        {
+        for (List<Integer> clique : cliques) {
             if (clique.size() == 1)
                 copy.remove(clique);
-            if(Collections.disjoint(clique, adjacentNodes))
+            if (Collections.disjoint(clique, adjacentNodes))
                 copy.remove(clique);
         }
 
@@ -110,13 +103,11 @@ public class Graph {
         return cliques.indexOf(smallestClique(copy));
     }
 
-    private List<Integer> smallestClique(List<List<Integer>> cliques)
-    {
+    private List<Integer> smallestClique(List<List<Integer>> cliques) {
         int minimumSize = Integer.MAX_VALUE;
         int index = 0;
         for (List<Integer> clique : cliques)
-            if (clique.size() < minimumSize)
-            {
+            if (clique.size() < minimumSize) {
                 index = cliques.indexOf(clique);
                 minimumSize = clique.size();
             }
@@ -124,11 +115,9 @@ public class Graph {
         return cliques.get(index);
     }
 
-    private List<Integer> computeDegreeOfNodes()
-    {
+    private List<Integer> computeDegreeOfNodes() {
         List<Integer> degrees = new ArrayList<>();
-        for (int i = 0; i < this.nodes; i++)
-        {
+        for (int i = 0; i < this.nodes; i++) {
             int count = 0;
             for (int j = 0; j < this.nodes; j++)
                 count += this.adjacency[i][j];
@@ -139,18 +128,4 @@ public class Graph {
         return degrees;
     }
 
-    public String showContents() {
-
-        String output = "";
-
-        for (int i = 0; i < nodes; i++)
-        {
-            for (int j = 0; j < nodes; j++)
-                    output += adjacency[i][j] + " ";
-
-            output += '\n';
-        }
-
-        return output;
-    }
 }

@@ -1,3 +1,8 @@
+/*
+    @author Roberta Buzatu - s1020137
+    @author Bart van der Heijden - s1017343
+ */
+
 package practical1;
 
 import java.util.Scanner;
@@ -12,7 +17,7 @@ public class Main {
         {
             Problem problem = readProblems(input);
             problem.printSolution(problem.solve(input));
-            input.nextLine();
+            input.next();
         }
     }
 
