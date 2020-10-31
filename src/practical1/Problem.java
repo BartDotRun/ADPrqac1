@@ -56,10 +56,24 @@ public class Problem {
         return answer;
     }
 
-    private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
-    {
-
+    private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer) {
+        if (clique.size() > 10 && p <= 0.3) {
+            //split into groups
+            testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
+            testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
+        } else {
+            // test all cases individually
+            List<Integer> person = new ArrayList<>();
+            for(int i = 0; i < clique.size(); i++) {
+                person.add(clique.get(i));
+                boolean result = testClique(person, scanner);
+                if (result)
+                    answer.add(clique.get(i));
+                person.remove(i);
+            }
+        }
     }
+
 
     private boolean testClique(List<Integer> clique, Scanner scanner)
     {
