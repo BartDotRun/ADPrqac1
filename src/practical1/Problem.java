@@ -66,7 +66,7 @@ public class Problem {
 
     private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
-        if(answer.size() > upperBound)
+        if(answer.size() >= upperBound)
             return;
 
         if (clique.size() > 10 && this.infectionChance <= 0.3)
