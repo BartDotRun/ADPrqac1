@@ -25,6 +25,11 @@ public class Graph {
 
     }
 
+    public List<List<Integer>> getCliques()
+    {
+        return this.cliques;
+    }
+
     public void findCliques()
     {
         List<Integer> degrees = this.computeDegreeOfNodes();

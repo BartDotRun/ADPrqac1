@@ -1,5 +1,9 @@
 package practical1;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class Problem {
     public int nodes;
     public int edges;
@@ -27,10 +31,36 @@ public class Problem {
         this.graph.addEdge(node1, node2);
     }
 
-    public void solve()
+    public List<Integer> solve(Scanner scanner)
     {
+        List<Integer> answer = new ArrayList<>();
         graph.findCliques();
+        int clique = 0;
+        while(clique < graph.getCliques().size() && answer.size()<upperBound)
+        {
+            boolean test = testClique(graph.getCliques().get(clique), scanner);
+            if (test)
+                testWithinClique(graph.getCliques().get(clique), scanner, answer);
+            clique++;
+        }
 
+        return answer;
+    }
+
+    private void testWithinClique(List<Integer> integers, Scanner scanner, List<Integer> answer)
+    {
+
+    }
+
+    private boolean testClique(List<Integer> clique, Scanner scanner)
+    {
+        String test = "test";
+        for (int node : clique)
+            test += ' ' + node;
+
+        System.out.println(test);
+
+        return scanner.nextLine().equals("true");
     }
 
     public String showContents() {

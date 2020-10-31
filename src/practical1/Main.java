@@ -11,7 +11,7 @@ public class Main {
         for (int i = 0; i < numberOfProblems; i++)
         {
             Problem problem = readProblems(input);
-            problem.solve();
+            problem.solve(input);
         }
     }
 
