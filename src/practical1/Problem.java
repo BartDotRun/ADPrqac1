@@ -53,7 +53,7 @@ public class Problem {
         List<Integer> answer = new ArrayList<>();
         graph.findCliques();
         int clique = 0;
-        while(clique < graph.getCliques().size() && answer.size()<upperBound)
+        while(clique < graph.getCliques().size() && answer.size()<=upperBound)
         {
             boolean test = testClique(graph.getCliques().get(clique), scanner);
             if (test)
@@ -66,6 +66,9 @@ public class Problem {
 
     private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
+        if(answer.size() > upperBound)
+            return;
+
         if (clique.size() > 10 && this.infectionChance <= 0.3)
         {
             testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
