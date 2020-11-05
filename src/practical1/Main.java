@@ -8,8 +8,8 @@ package practical1;
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
+
         Scanner input = new Scanner(System.in);
         int numberOfProblems = input.nextInt();
 
@@ -19,6 +19,7 @@ public class Main {
             problem.printSolution(problem.solve(input));
             input.next();
         }
+        input.close();
     }
 
     public static Problem readProblems(Scanner input) {

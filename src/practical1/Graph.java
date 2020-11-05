@@ -79,8 +79,11 @@ public class Graph {
 
             if (cliques.get(i).size() == 1) {
                 int index = findSmallestClique(cliques, cliques.get(i).get(0));
-                cliques.get(index).add(cliques.get(i).get(0));
-                cliques.remove(cliques.get(i));
+                if (index >= 0)
+                {
+                    cliques.get(index).add(cliques.get(i).get(0));
+                    cliques.remove(cliques.get(i));
+                }
             } else
                 i++;
         }
@@ -99,8 +102,9 @@ public class Graph {
                 copy.remove(clique);
         }
 
-
-        return cliques.indexOf(smallestClique(copy));
+        if (copy.size() > 0)
+            return cliques.indexOf(smallestClique(copy));
+        else return -1;
     }
 
     private List<Integer> smallestClique(List<List<Integer>> cliques) {

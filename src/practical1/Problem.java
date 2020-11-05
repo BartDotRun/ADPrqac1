@@ -38,12 +38,16 @@ public class Problem {
 
     public void printSolution(List<Integer> nodes)
     {
+        nodes.sort(Integer::compareTo);
+
         String answer = "answer";
         for(int node : nodes)
         {
             answer += ' ';
-            answer += (char) (node + 48);
+            answer += String.valueOf(node);
         }
+
+
 
         System.out.println(answer);
     }
@@ -69,7 +73,7 @@ public class Problem {
         if(answer.size() >= upperBound)
             return;
 
-        if (clique.size() > 10 && this.infectionChance <= 0.3)
+        if (clique.size() > 10 || this.infectionChance <= 0.3)
         {
             testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
             testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
@@ -79,7 +83,7 @@ public class Problem {
                 List<Integer> person = new ArrayList<>();
                 for(int node : clique) {
                     person.add(node);
-                    if (testClique(person, scanner))
+                    if (testClique(person, scanner) && !answer.contains(person))
                         answer.add(node);
                     person.remove(0);
             }
@@ -93,7 +97,7 @@ public class Problem {
         for (int node : clique)
         {
             test += ' ';
-            test += (char) (node + 48);
+            test += String.valueOf(node);
         }
 
         System.out.println(test);
