@@ -48,7 +48,6 @@ public class Problem {
         }
 
 
-
         System.out.println(answer);
     }
 
@@ -83,7 +82,7 @@ public class Problem {
                 List<Integer> person = new ArrayList<>();
                 for(int node : clique) {
                     person.add(node);
-                    if (testClique(person, scanner) && !answer.contains(person))
+                    if (testClique(person, scanner) && !answer.contains(node))
                         answer.add(node);
                     person.remove(0);
             }
