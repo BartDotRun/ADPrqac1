@@ -27,9 +27,10 @@ public class Main {
 
         for (int i = 0; i < numberOfProblems; i++)
         {
+            writer.write("Problem "+ i + '\n');
             Problem problem = readProblems(input);
             problem.printSolution(problem.solve(input));
-            input.next();
+            writer.write(input.next() + '\n');
         }
         input.close();
 
@@ -39,16 +40,17 @@ public class Main {
     public static Problem readProblems(Scanner input) throws IOException {
         Problem p = new Problem(input.nextInt(), input.nextInt(), input.nextInt(), input.nextDouble(), input.nextInt(), input.nextInt());
 
-
+        writer.write("Should read " + p.edges + "edges." + '\n');
         int counter = 0;
         for (int i = 0; i < p.edges; i++){
             int node1 = input.nextInt();
             int node2 = input.nextInt();
             p.addEdge(node1, node2);
             counter++;
+            writer.write("Number of edges read: "+ counter + '\n');
         }
 
-        writer.write("Number of edges read: "+ counter + '\n');
+
         return p;
     }
 }
