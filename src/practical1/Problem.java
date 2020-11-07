@@ -5,6 +5,7 @@
 
 package practical1;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -47,22 +48,34 @@ public class Problem {
             answer += String.valueOf(node);
         }
 
-
-
         System.out.println(answer);
     }
 
-    public List<Integer> solve(Scanner scanner)
-    {
+    public List<Integer> solve(Scanner scanner) throws IOException {
         List<Integer> answer = new ArrayList<>();
-        graph.findCliques();
-        int clique = 0;
-        while(clique < graph.getCliques().size() && answer.size()<=upperBound)
+
+        // if there are no edges
+        if(edges == 0)
         {
-            boolean test = testClique(graph.getCliques().get(clique), scanner);
-            if (test)
-                testWithinClique(graph.getCliques().get(clique), scanner, answer);
-            clique++;
+            List<Integer> nodes = new ArrayList<>();
+            for (int i = 0; i < this.nodes; i++)
+                nodes.add(i);
+            testWithinClique(nodes, scanner, answer);
+        }
+
+        // if there is at least one edge
+        else
+        {
+            graph.findCliques();
+            Main.writer.write(String.valueOf(this.graph.getCliques()) + '\n');
+            int clique = 0;
+            while(clique < graph.getCliques().size() && answer.size()<=upperBound)
+            {
+                boolean test = testClique(graph.getCliques().get(clique), scanner);
+                if (test)
+                    testWithinClique(graph.getCliques().get(clique), scanner, answer);
+                clique++;
+            }
         }
 
         return answer;
