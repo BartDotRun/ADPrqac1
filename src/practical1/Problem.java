@@ -48,6 +48,7 @@ public class Problem {
         }
 
 
+
         System.out.println(answer);
     }
 
@@ -72,7 +73,7 @@ public class Problem {
         if(answer.size() >= upperBound)
             return;
 
-        if (clique.size() > 10 || this.infectionChance <= 0.3)
+        if (clique.size() > 10 && this.infectionChance <= 0.3)
         {
             testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
             testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
