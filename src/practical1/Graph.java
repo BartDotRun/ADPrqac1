@@ -37,14 +37,12 @@ public class Graph {
     public void findCliques() {
         List<Integer> degrees = this.computeDegreeOfNodes();
         List<Integer> grouped = new ArrayList<>();
-        List<Integer> checked = new ArrayList<>();
 
         while (grouped.size() < this.nodes) {
-            int currentNode = findMin(degrees, checked);
+            int currentNode = findMin(degrees, grouped);
             List<Integer> currentGroup = new ArrayList<>();
             currentGroup.add(currentNode);
             grouped.add(currentNode);
-            checked.add(currentNode);
 
             for (int i = 0; i < this.nodes; i++)
                 if (this.adjacency[currentNode][i] == 1 && !grouped.contains(i)) {
