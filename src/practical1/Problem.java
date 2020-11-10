@@ -104,8 +104,13 @@ public class Problem {
 
         if (clique.size() > 10 && this.infectionChance <= 0.3)
         {
-            testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
-            testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
+            List<Integer> clique1 = clique.subList(0, clique.size()/2);
+            List<Integer> clique2 = clique.subList(clique.size()/2, clique.size());
+
+            if (testClique(clique1, scanner))
+                testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
+            if (testClique(clique2, scanner))
+                testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
         }
         else
             {

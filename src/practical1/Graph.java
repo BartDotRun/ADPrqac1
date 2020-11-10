@@ -57,7 +57,8 @@ public class Graph {
             grouped.add(currentNode);
 
             for (int i = 0; i < this.nodes; i++)
-                if (this.adjacency[currentNode][i] == 1 && !grouped.contains(i)) {
+                if (this.adjacency[currentNode][i] == 1 && !grouped.contains(i))
+                {
                     currentGroup.add(i);
                     grouped.add(i);
                 }
