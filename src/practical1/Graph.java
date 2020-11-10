@@ -99,7 +99,7 @@ public class Graph {
         while (i < this.cliques.size()) {
 
             if (this.cliques.get(i).size() == 1) {
-                int index = findSmallestClique(this.cliques.get(i).get(0));
+                int index = findSmallestClique(this.cliques.get(i).get(0)); //index == node number(?)
                 if (index >= 0)
                 {
                     this.cliques.get(index).add(this.cliques.get(i).get(0));

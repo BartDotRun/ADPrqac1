@@ -99,7 +99,7 @@ public class Problem {
      */
     private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
-        if(answer.size() >= upperBound)
+        if(answer.size() > upperBound)
             return;
 
         if (clique.size() > 10 && this.infectionChance <= 0.3)
@@ -126,7 +126,7 @@ public class Problem {
 
 
     /**
-     * Prints the test command for a given clique.
+     * Prints the test command for a given clique. And returns the test result as boolean.
      * @param clique
      * @param scanner
      * @return whether the clique was positive or not.
