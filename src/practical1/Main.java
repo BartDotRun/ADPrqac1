@@ -47,8 +47,10 @@ public class Main {
             int node2 = input.nextInt();
             p.addEdge(node1, node2);
             counter++;
-            writer.write("Number of edges read: "+ counter + '\n');
+            //writer.write("Number of edges read: "+ counter + '\n');
         }
+
+        writer.write("Edges read: " + counter);
 
 
         return p;
