@@ -5,7 +5,6 @@
 
 package practical1;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,11 +31,20 @@ public class Problem {
         this.upperBound = upperBound;
     }
 
+    /**
+     * Adds an edge between the two nodes to the graph.
+     * @param node1
+     * @param node2
+     */
     public void addEdge(int node1, int node2)
     {
         this.graph.addEdge(node1, node2);
     }
 
+    /**
+     * Prints out the answer given in the list.
+     * @param nodes
+     */
     public void printSolution(List<Integer> nodes)
     {
         nodes.sort(Integer::compareTo);
@@ -51,10 +59,15 @@ public class Problem {
         System.out.println(answer);
     }
 
-    public List<Integer> solve(Scanner scanner) throws IOException {
+    /**
+     * Solves the problem.
+     * @param scanner
+     * @return the list of infected nodes.
+     */
+    public List<Integer> solve(Scanner scanner)
+    {
         List<Integer> answer = new ArrayList<>();
 
-        // if there are no edges
         if(edges == 0)
         {
             List<Integer> nodes = new ArrayList<>();
@@ -62,12 +75,9 @@ public class Problem {
                 nodes.add(i);
             testWithinClique(nodes, scanner, answer);
         }
-
-        // if there is at least one edge
         else
         {
             graph.findCliques();
-            Main.writer.write(String.valueOf(this.graph.getCliques()) + '\n');
             int clique = 0;
             while(clique < graph.getCliques().size() && answer.size()<=upperBound)
             {
@@ -81,6 +91,12 @@ public class Problem {
         return answer;
     }
 
+    /**
+     * Performs the testing for a given clique, either in group or individually.
+     * @param clique
+     * @param scanner
+     * @param answer
+     */
     private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
         if(answer.size() >= upperBound)
@@ -104,6 +120,12 @@ public class Problem {
     }
 
 
+    /**
+     * Prints the test command for a given clique.
+     * @param clique
+     * @param scanner
+     * @return whether the clique was positive or not.
+     */
     private boolean testClique(List<Integer> clique, Scanner scanner)
     {
         String test = "test";
