@@ -17,6 +17,8 @@ public class Problem {
     public int lowerBound;
     public int upperBound;
     public Graph graph;
+    public int optimalPoolSize;
+    public int numberOfTests;
 
 
     public Problem(int nodes, int edges, int initInfected, double infectionChance, int lowerBound, int upperBound) {
@@ -29,6 +31,32 @@ public class Problem {
         this.infectionChance = infectionChance;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
+
+        this.numberOfTests = 0;
+        optimalPoolSize = setOptimalPoolSize();
+        System.err.println("[INFO] Pool size set to: " + optimalPoolSize + " based on an infection rate of: " + infectionChance);
+    }
+
+    /**
+     * Set the optimal pool size, based on the infection rate, according to: https://blogs.sas.com/content/iml/2020/07/06/pool-testing-covid19.html
+     * @return optimal pool size.
+     */
+    private int setOptimalPoolSize() {
+        if (this.edges == 0) {
+            float ratio = (float) upperBound / (float) nodes;
+            float value = ratio * (float)500;
+            return 7;
+        }
+        if (this.infectionChance >= 0.125) {
+            return 3;
+        } else if (this.infectionChance >= 0.075) {
+            return 4;
+        } else if(this.infectionChance >= 0.0375) {
+            return 5;
+        } else if(this.infectionChance >= 0.0175) {
+            return 7;
+        }
+        return 11;
     }
 
     /**
@@ -70,10 +98,10 @@ public class Problem {
 
         if(edges == 0)
         {
-            List<Integer> nodes = new ArrayList<>();
+            List<Integer> clique = new ArrayList<>();
             for (int i = 0; i < this.nodes; i++)
-                nodes.add(i);
-            testWithinClique(nodes, scanner, answer);
+                clique.add(i);
+            testWithinClique(clique, scanner, answer);
         }
         else
         {
@@ -81,7 +109,7 @@ public class Problem {
             int clique = 0;
             while(clique < graph.getCliques().size() && answer.size()<=upperBound)
             {
-                boolean test = testClique(graph.getCliques().get(clique), scanner);
+                boolean test = testClique(graph.getCliques().get(clique), scanner, answer);
                 if (test)
                     testWithinClique(graph.getCliques().get(clique), scanner, answer);
                 clique++;
@@ -99,25 +127,25 @@ public class Problem {
      */
     private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
-        if(answer.size() > upperBound)
+        if(answer.size() >= upperBound)
             return;
 
-        if (clique.size() > 10 && this.infectionChance <= 0.3)
+        if (clique.size() > optimalPoolSize)
         {
             List<Integer> clique1 = clique.subList(0, clique.size()/2);
             List<Integer> clique2 = clique.subList(clique.size()/2, clique.size());
 
-            if (testClique(clique1, scanner))
+            if (testClique(clique1, scanner, answer))
                 testWithinClique(clique.subList(0, clique.size()/2), scanner, answer);
-            if (testClique(clique2, scanner))
+            if (testClique(clique2, scanner, answer))
                 testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
         }
-        else
+        else //if (testClique(clique, scanner, answer))
             {
                 List<Integer> person = new ArrayList<>();
                 for(int node : clique) {
                     person.add(node);
-                    if (testClique(person, scanner) && !answer.contains(node))
+                    if (testClique(person, scanner, answer) && !answer.contains(node))
                         answer.add(node);
                     person.remove(0);
             }
@@ -131,8 +159,11 @@ public class Problem {
      * @param scanner
      * @return whether the clique was positive or not.
      */
-    private boolean testClique(List<Integer> clique, Scanner scanner)
+    private boolean testClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
+        if (answer.size() >= upperBound) {
+            return false;
+        }
         String test = "test";
         for (int node : clique)
         {
@@ -141,7 +172,7 @@ public class Problem {
         }
 
         System.out.println(test);
-
+        numberOfTests++;
         return scanner.next().equals("true");
     }
 

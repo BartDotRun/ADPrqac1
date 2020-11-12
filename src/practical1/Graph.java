@@ -65,8 +65,30 @@ public class Graph {
 
             this.cliques.add(currentGroup);
         }
-
         eliminateSingleCliques();
+        System.err.println("[INFO] Finished finding cliques.");
+        int big5 = 0;
+        int big10 = 0;
+        int big20 = 0;
+        List<Integer> big20list = new ArrayList<>();
+        for (int i = 0; i < cliques.size(); i++) {
+            if (cliques.get(i).size() >= 20) {
+                big20++;
+                big20list.add(cliques.get(i).size());
+            } else if (cliques.get(i).size() >= 10) {
+                big10++;
+            } else if (cliques.get(i).size() >= 5) {
+                big5++;
+            }
+        }
+        System.err.println("[INFO] Clique distribution: total = " + cliques.size() + ", >5 = " + big5 + ", n>10 = " + big10 + ", n>20 = " + big20);
+        if(big20 > 0) {
+            System.err.print("[INFO] Clique sizes that are bigger than 20: ");
+            for (int clique : big20list) {
+                System.err.print(clique + ", ");
+            }
+            System.err.println(" ");
+        }
     }
 
     /**
@@ -91,22 +113,24 @@ public class Graph {
     }
 
     /**
-     * Merges the cliques with only one element into the smallest cliques that have a connection with them.
+     * Adds the single node cliques into the smallest neighbouring clique.
      */
     private void eliminateSingleCliques()
     {
         int i = 0;
         while (i < this.cliques.size()) {
-
             if (this.cliques.get(i).size() == 1) {
-                int index = findSmallestClique(this.cliques.get(i).get(0)); //index == node number(?)
+                int index = findSmallestClique(this.cliques.get(i).get(0));
                 if (index >= 0)
                 {
                     this.cliques.get(index).add(this.cliques.get(i).get(0));
                     this.cliques.remove(this.cliques.get(i));
                 }
+                else
+                    i++;
             } else
                 i++;
+
         }
     }
 
