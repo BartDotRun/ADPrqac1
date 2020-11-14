@@ -157,6 +157,7 @@ public class Problem {
      * Prints the test command for a given clique. And returns the test result as boolean.
      * @param clique
      * @param scanner
+     * @param answer
      * @return whether the clique was positive or not.
      */
     private boolean testClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
