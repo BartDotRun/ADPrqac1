@@ -140,7 +140,7 @@ public class Problem {
             if (testClique(clique2, scanner, answer))
                 testWithinClique(clique.subList(clique.size()/2, clique.size()), scanner, answer);
         }
-        else //if (testClique(clique, scanner, answer))
+        else
             {
                 List<Integer> person = new ArrayList<>();
                 for(int node : clique) {
