@@ -21,11 +21,12 @@ public class Problem {
     public int numberOfTests;
 
 
-    public Problem(int nodes, int edges, int initInfected, double infectionChance, int lowerBound, int upperBound) {
+    public Problem(int nodes, int edges, int initInfected, double infectionChance, int lowerBound, int upperBound)
+    {
 
         this.nodes = nodes;
         this.edges = edges;
-        graph = new Graph(nodes, edges);
+        this.graph = new Graph(nodes, edges);
 
         this.initInfected = initInfected;
         this.infectionChance = infectionChance;
@@ -33,29 +34,27 @@ public class Problem {
         this.upperBound = upperBound;
 
         this.numberOfTests = 0;
-        optimalPoolSize = setOptimalPoolSize();
-        System.err.println("[INFO] Pool size set to: " + optimalPoolSize + " based on an infection rate of: " + infectionChance);
+        this.optimalPoolSize = this.setOptimalPoolSize();
+        System.err.println("[INFO] Pool size set to: " + this.optimalPoolSize + " based on an infection rate of: " + this.infectionChance);
     }
 
     /**
      * Set the optimal pool size, based on the infection rate, according to: https://blogs.sas.com/content/iml/2020/07/06/pool-testing-covid19.html
      * @return optimal pool size.
      */
-    private int setOptimalPoolSize() {
-        if (this.edges == 0) {
-            float ratio = (float) upperBound / (float) nodes;
-            float value = ratio * (float)500;
+    private int setOptimalPoolSize()
+    {
+        if (this.edges == 0)
             return 7;
-        }
-        if (this.infectionChance >= 0.125) {
+        if (this.infectionChance >= 0.125)
             return 3;
-        } else if (this.infectionChance >= 0.075) {
+        if (this.infectionChance >= 0.075)
             return 4;
-        } else if(this.infectionChance >= 0.0375) {
+        if(this.infectionChance >= 0.0375)
             return 5;
-        } else if(this.infectionChance >= 0.0175) {
+        if(this.infectionChance >= 0.0175)
             return 7;
-        }
+
         return 11;
     }
 
@@ -96,7 +95,7 @@ public class Problem {
     {
         List<Integer> answer = new ArrayList<>();
 
-        if(edges == 0)
+        if(this.edges == 0)
         {
             List<Integer> clique = new ArrayList<>();
             for (int i = 0; i < this.nodes; i++)
@@ -105,13 +104,13 @@ public class Problem {
         }
         else
         {
-            graph.findCliques();
+            this.graph.findCliques();
             int clique = 0;
-            while(clique < graph.getCliques().size() && answer.size()<=upperBound)
+            while(clique < this.graph.getCliques().size() && answer.size()<=this.upperBound)
             {
-                boolean test = testClique(graph.getCliques().get(clique), scanner, answer);
+                boolean test = testClique(this.graph.getCliques().get(clique), scanner, answer);
                 if (test)
-                    testWithinClique(graph.getCliques().get(clique), scanner, answer);
+                    testWithinClique(this.graph.getCliques().get(clique), scanner, answer);
                 clique++;
             }
         }
@@ -127,10 +126,10 @@ public class Problem {
      */
     private void testWithinClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
-        if(answer.size() >= upperBound)
+        if(answer.size() >= this.upperBound)
             return;
 
-        if (clique.size() > optimalPoolSize)
+        if (clique.size() > this.optimalPoolSize)
         {
             List<Integer> clique1 = clique.subList(0, clique.size()/2);
             List<Integer> clique2 = clique.subList(clique.size()/2, clique.size());
@@ -162,7 +161,7 @@ public class Problem {
      */
     private boolean testClique(List<Integer> clique, Scanner scanner, List<Integer> answer)
     {
-        if (answer.size() >= upperBound) {
+        if (answer.size() >= this.upperBound) {
             return false;
         }
         String test = "test";
@@ -173,7 +172,7 @@ public class Problem {
         }
 
         System.out.println(test);
-        numberOfTests++;
+        this.numberOfTests++;
         return scanner.next().equals("true");
     }
 

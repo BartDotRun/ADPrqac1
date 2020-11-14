@@ -66,29 +66,7 @@ public class Graph {
             this.cliques.add(currentGroup);
         }
         eliminateSingleCliques();
-        System.err.println("[INFO] Finished finding cliques.");
-        int big5 = 0;
-        int big10 = 0;
-        int big20 = 0;
-        List<Integer> big20list = new ArrayList<>();
-        for (int i = 0; i < cliques.size(); i++) {
-            if (cliques.get(i).size() >= 20) {
-                big20++;
-                big20list.add(cliques.get(i).size());
-            } else if (cliques.get(i).size() >= 10) {
-                big10++;
-            } else if (cliques.get(i).size() >= 5) {
-                big5++;
-            }
-        }
-        System.err.println("[INFO] Clique distribution: total = " + cliques.size() + ", >5 = " + big5 + ", n>10 = " + big10 + ", n>20 = " + big20);
-        if(big20 > 0) {
-            System.err.print("[INFO] Clique sizes that are bigger than 20: ");
-            for (int clique : big20list) {
-                System.err.print(clique + ", ");
-            }
-            System.err.println(" ");
-        }
+
     }
 
     /**
@@ -103,7 +81,8 @@ public class Graph {
         int minimum = Integer.MAX_VALUE;
         int i = 0;
         while (i < this.nodes) {
-            if (!grouped.contains(i) && degrees.get(i) < minimum) {
+            if (!grouped.contains(i) && degrees.get(i) < minimum)
+            {
                 index = i;
                 minimum = degrees.get(i);
             }

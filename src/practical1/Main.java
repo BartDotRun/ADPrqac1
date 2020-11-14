@@ -16,15 +16,14 @@ public class Main {
 
         for (int i = 0; i < numberOfProblems; i++)
         {
-            System.err.println("[INFO] Starting problem " + (i+1));
             Problem problem = readProblems(input);
-            System.err.println("[INFO] Problem properties: " + problem.nodes + " nodes, " + problem.edges + " edges, " + problem.initInfected + " initially infected, " + problem.lowerBound + " lower bound, " + problem.upperBound + " upper bound.");
             problem.printSolution(problem.solve(input));
             float proportion = (float)problem.numberOfTests / (float)problem.nodes;
-            System.err.println("[INFO] Problem " + (i+1) + " was solved using " + problem.numberOfTests + " tests. (proportion of: " + proportion + " in relation to " + problem.nodes + " total nodes)");
-            System.err.println(input.next());
+            System.err.println("[INFO] Problem " + (i+1) + " was solved using " +
+                    problem.numberOfTests + " tests. (proportion of: " + proportion +
+                    " in relation to " + problem.nodes + " total nodes)");
+            input.next();
             input.nextLine();
-            System.err.println(" ");
         }
         input.close();
     }
@@ -38,7 +37,8 @@ public class Main {
     {
         Problem p = new Problem(input.nextInt(), input.nextInt(), input.nextInt(), input.nextDouble(), input.nextInt(), input.nextInt());
 
-        for (int i = 0; i < p.edges; i++){
+        for (int i = 0; i < p.edges; i++)
+        {
             int node1 = input.nextInt();
             int node2 = input.nextInt();
             p.addEdge(node1, node2);
